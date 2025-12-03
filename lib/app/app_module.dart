@@ -1,3 +1,4 @@
+import 'package:djsync/modules/home/home_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
@@ -6,7 +7,7 @@ class AppModule extends Module {
     super.routes(r);
 
     // r.module('/', module: LoginModule());
-    // r.module('/', module: HomeModule());
+    r.module('/', module: HomeModule());
     // r.module('/products', module: ProductsModule());
     // r.module('/clients', module: ClientsModule());
   }

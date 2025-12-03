@@ -9,6 +9,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: "DJSync",
+      theme: ThemeData(fontFamily: 'Montserrat'),
       routerConfig: Modular.routerConfig,
     );
   }
