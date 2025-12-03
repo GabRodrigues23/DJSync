@@ -23,18 +23,18 @@ dev_dependencies:
 flutter_icons:
     android: true
     ios: true
-    image_path: "assets/images/icon/icon.ico"
+    image_path: assets/images/icon/icon.ico
 
 flutter:
   uses-material-design: true
   
   assets:
-    - assets/images/logo-sembg.png
+    - assets/images/logo.png
 
   fonts:
     - family: Montserrat
       fonts:
-        - asset: assets/fonts/Montserrat*.ttf
-        - asset: assets/fonts/static/*.ttf
-        - asset: assets/fonts/Montserrat-Italic*.ttf
-          style: italic
+        - asset: assets/fonts/montserrat/Montserrat-VariableFont_wght.ttf
+        - asset: assets/fonts/montserrat/static/Montserrat-Bold.ttf
+        - asset: assets/fonts/montserrat/static/Montserrat-Regular.ttf
+        - asset: assets/fonts/montserrat/Montserrat-Italic-VariableFont_wght.ttf
