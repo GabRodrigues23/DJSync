@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_modular: ^6.4.1
+  foundation: ^0.0.5
 
 dev_dependencies:
   flutter_test:
