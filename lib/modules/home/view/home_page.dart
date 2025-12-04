@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,26 +10,42 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF1976D2),
         leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Image.asset('assets/images/logo.png'),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.sync, size: 20, color: Colors.white),
+              const SizedBox(width: 2),
+              const Text(
+                'DJSYNC',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
+            ],
+          ),
         ),
-        leadingWidth: 150,
+        leadingWidth: double.infinity,
         actions: [
           IconButton(
-            onPressed: () {},
             icon: Icon(Icons.exit_to_app, color: Color(0xFFFFFFFF), size: 25),
+            onPressed: () {
+              Modular.to.navigate('/');
+            },
           ),
         ],
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(50),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 20,
             children: [
               ElevatedButton(
-                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF180E6D),
                 ),
@@ -53,12 +70,14 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                onPressed: () {
+                  Modular.to.navigate('/products');
+                },
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF180E6D),
                 ),
-                onPressed: () {},
                 child: SizedBox(
                   height: 75,
                   child: Row(
@@ -76,6 +95,24 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Aviso'),
+                      content: Text('Conteúdo em Desenvolvimento!'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Fechar',
+                            style: TextStyle(color: Color(0xFF180E6D)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
