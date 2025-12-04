@@ -84,8 +84,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
-
+                SizedBox(height: 10),
                 TextButton.icon(
                   onPressed: () {
                     Modular.to.pushNamed('/settings');
