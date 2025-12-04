@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:asp/asp.dart';
-import 'package:djsync/modules/products/viewmodel/products_viewmodel.dart';
+import 'package:djsync/modules/products/viewmodel/product_viewmodel.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final vm = Modular.get<ProductsViewmodel>();
+    final vm = Modular.get<ProductViewmodel>();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Consulta de Produtos'),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.refresh, size: 32),
+            tooltip: 'Atualizar Lista',
+            onPressed: () {
+              vm.importFile();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.exit_to_app, size: 32),
+            tooltip: 'Sair',
+            onPressed: () {
+              Modular.to.navigate('/home');
+            },
+          ),
         ],
       ),
 
@@ -32,9 +45,16 @@ class ProductPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  Icon(Icons.list_alt, size: 60, color: Colors.grey),
-                  Text('Nenhum produto carregado.'),
-                  Text('Use o botão abaixo para importar o TXT.'),
+                  Icon(
+                    Icons.cloud_download_outlined,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Nenhum produto carregado.',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
                 ],
               ),
             );
@@ -85,7 +105,7 @@ class ProductPage extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    // modal
+                    // Edit Modal
                   },
                 ),
               );
@@ -100,9 +120,11 @@ class ProductPage extends StatelessWidget {
           FloatingActionButton.extended(
             heroTag: 'btnImport',
             onPressed: vm.importFile,
-            label: const Text('Importar TXT'),
+            label: const Text('Importar TXT       '),
             icon: const Icon(Icons.upload_file),
+            elevation: 2,
           ),
+
           const SizedBox(height: 15),
           FloatingActionButton.extended(
             heroTag: 'btnSave',
@@ -110,6 +132,7 @@ class ProductPage extends StatelessWidget {
             onPressed: vm.saveFile,
             label: const Text('Salvar Alterações'),
             icon: const Icon(Icons.save),
+            elevation: 2,
           ),
         ],
       ),

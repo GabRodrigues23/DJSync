@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:djsync/modules/products/data/repository/api_product_repository.dart';
 import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
-import 'package:djsync/modules/products/viewmodel/products_viewmodel.dart';
+import 'package:djsync/modules/products/viewmodel/product_viewmodel.dart';
 import 'package:djsync/modules/products/view/product_page.dart';
 
 class ProductModule extends Module {
@@ -10,7 +10,7 @@ class ProductModule extends Module {
     super.binds(i);
 
     i.add<ProductRepositoryInterface>(ApiProductRepository.new);
-    i.addSingleton(ProductsViewmodel.new);
+    i.addSingleton(ProductViewmodel.new);
   }
 
   @override
