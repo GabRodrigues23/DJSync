@@ -1,6 +1,6 @@
-import 'package:asp/asp.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:asp/asp.dart';
 import 'package:djsync/modules/products/data/model/product.dart';
 import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
 

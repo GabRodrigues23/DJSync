@@ -1,6 +1,6 @@
-import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:asp/asp.dart';
 import 'package:djsync/modules/products/viewmodel/products_viewmodel.dart';
 
 class ProductPage extends StatelessWidget {

@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:djsync/modules/products/data/model/product.dart';
-import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:djsync/modules/products/data/model/product.dart';
+import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
 
 class ApiProductRepository implements ProductRepositoryInterface {
   final Dio _dio = Dio();
