@@ -4,10 +4,10 @@ import 'package:asp/asp.dart';
 import 'package:djsync/modules/products/data/model/product.dart';
 import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
 
-class ProductsViewmodel extends Disposable {
+class ProductViewmodel extends Disposable {
   final ProductRepositoryInterface repository;
 
-  ProductsViewmodel(this.repository);
+  ProductViewmodel(this.repository);
 
   final productListState = atom<List<Product>>([]);
   final isLoadingState = atom<bool>(false);
