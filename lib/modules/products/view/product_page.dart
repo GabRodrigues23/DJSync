@@ -64,8 +64,10 @@ class ProductPage extends StatelessWidget {
             itemCount: list.length,
             itemBuilder: (context, index) {
               final product = list[index];
+              final isInactive = product.flag == -1;
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                color: isInactive ? Colors.grey[200] : Colors.white,
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.blue[900],
@@ -76,7 +78,13 @@ class ProductPage extends StatelessWidget {
                   ),
                   title: Text(
                     product.description,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      decoration: isInactive
+                          ? TextDecoration.lineThrough
+                          : null,
+                      color: isInactive ? Colors.grey : Colors.black,
+                    ),
                   ),
                   subtitle: Text(
                     'Cód: ${product.id} | Barras: ${product.barcode}',

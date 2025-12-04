@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:djsync/modules/products/data/model/product.dart';
 import 'package:djsync/modules/products/data/repository/product_repository_interface.dart';
@@ -10,89 +8,33 @@ class ApiProductRepository implements ProductRepositoryInterface {
 
   Future<String> _getBaseUrl() async {
     final prefs = await SharedPreferences.getInstance();
-    final url = prefs.getString('api_base_url');
-
-    if (url == null || url.isEmpty) {
-      throw Exception(
-        'URL do servidor não configurada. Informe em configurações!',
-      );
-    }
-    return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
-  }
-
-  Future<Options?> _getAuthOptions() async {
-    final prefs = await SharedPreferences.getInstance();
-    final user = prefs.getString('api_user');
-    final pass = prefs.getString('api_pass');
-
-    if (user != null && user.isNotEmpty) {
-      String basicAuth = 'Basic${base64Encode(utf8.encode('$user:$pass'))}';
-      return Options(headers: {'autorization': basicAuth});
-    }
-    return null;
+    return prefs.getString('api_bae_url') ?? '';
   }
 
   @override
   Future<List<Product>> importProducts() async {
     final baseUrl = await _getBaseUrl();
-    final endpoint =
-        '$baseUrl/exportacao/produtos'; // Rota definida no DJIntegração
-    final options = await _getAuthOptions();
+    if (baseUrl.isEmpty) throw Exception('Configure o servidor primeiro');
 
     try {
-      final response = await _dio.get(
-        endpoint,
-        options:
-            options?.copyWith(responseType: ResponseType.plain) ??
-            Options(responseType: ResponseType.plain),
-      );
-
-      final String content = response.data.toString();
-      final lines = LineSplitter.split(content).toList();
-      final List<Product> list = [];
-
-      for (var line in lines) {
-        if (line.trim().isEmpty) continue;
-        try {
-          list.add(Product.fromTxtLine(line));
-        } catch (e) {
-          debugPrint('Erro de parse na API: $e');
-        }
-      }
-
-      return list;
+      final response = await _dio.get('$baseUrl/products');
+      final List<dynamic> data = response.data;
+      return data.map((item) => Product.fromJson(item)).toList();
     } catch (e) {
-      throw Exception('Erro ao buscar dados do servidor: $e');
+      throw Exception('Erro na API: $e');
     }
   }
 
   @override
   Future<void> saveProduct(List<Product> products) async {
     final baseUrl = await _getBaseUrl();
-    final endpoint =
-        '$baseUrl/importacao/produtos'; // Rota definida no DJIntegração
-    final options = await _getAuthOptions();
 
     try {
-      final buffer = StringBuffer();
+      final jsonList = products.map((p) => p.toJson()).toList();
 
-      for (var product in products) {
-        buffer.writeln(product.toTxtLine());
-      }
-
-      final fileContent = buffer.toString();
-
-      final formData = FormData.fromMap({
-        'file': MultipartFile.fromString(
-          fileContent,
-          filename: 'PRODUTOS.TXT',
-          contentType: DioMediaType.parse('text/plain'),
-        ),
-      });
-
-      await _dio.post(endpoint, data: formData, options: options);
+      await _dio.put('$baseUrl/products', data: jsonList);
     } catch (e) {
-      throw Exception('Erro ao enviar dados para o servidor: $e');
+      throw Exception('Erro ao salvar: $e');
     }
   }
 }
