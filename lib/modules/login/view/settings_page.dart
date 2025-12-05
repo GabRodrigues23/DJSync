@@ -12,10 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _urlController = TextEditingController();
-  final _userController = TextEditingController();
-  final _passController = TextEditingController();
   bool _isLoading = true;
-  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -27,8 +24,6 @@ class _SettingsPageState extends State<SettingsPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _urlController.text = prefs.getString('api_base_url') ?? 'http://';
-      _userController.text = prefs.getString('api_user') ?? '';
-      _passController.text = prefs.getString('api_pass') ?? '';
       _isLoading = false;
     });
   }
@@ -46,8 +41,6 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     await prefs.setString('api_base_url', url);
-    await prefs.setString('api_user', _userController.text.trim());
-    await prefs.setString('api_pass', _passController.text.trim());
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -66,8 +59,6 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void dispose() {
     _urlController.dispose();
-    _userController.dispose();
-    _passController.dispose();
     super.dispose();
   }
 
@@ -91,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'Conexão com DJIntegração',
+                      'Conexão com DJSYNC SERVER',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -105,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       keyboardType: TextInputType.url,
                       decoration: const InputDecoration(
                         labelText: 'URL Base do Servidor',
-                        hintText: 'http://192.168.0.1:9000',
+                        hintText: 'http://127.0.0.1:9000',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.link),
                       ),
@@ -117,44 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
 
-                    TextFormField(
-                      controller: _userController,
-                      decoration: InputDecoration(
-                        labelText: 'Usuário',
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.person),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty)
-                          return 'Informe o Usuário';
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-
-                    TextFormField(
-                      controller: _passController,
-                      obscureText: _obscurePassword,
-                      decoration: InputDecoration(
-                        labelText: 'Senha',
-                        border: const OutlineInputBorder(),
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () => _obscurePassword = !_obscurePassword,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 40),
 
                     ElevatedButton.icon(

@@ -87,7 +87,7 @@ class ProductPage extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    'Cód: ${product.id} | Barras: ${product.barcode}',
+                    'Código: ${product.id} | Barras: ${product.barcode}',
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +102,7 @@ class ProductPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Est: ${product.stock.toStringAsFixed(0)}',
+                        'Estoque: ${product.stock.toStringAsFixed(0)}',
                         style: TextStyle(
                           color: product.stock < 0
                               ? Colors.red
@@ -125,15 +125,6 @@ class ProductPage extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton.extended(
-            heroTag: 'btnImport',
-            onPressed: vm.importFile,
-            label: const Text('Importar TXT       '),
-            icon: const Icon(Icons.upload_file),
-            elevation: 2,
-          ),
-
-          const SizedBox(height: 15),
           FloatingActionButton.extended(
             heroTag: 'btnSave',
             backgroundColor: Colors.green[700],
