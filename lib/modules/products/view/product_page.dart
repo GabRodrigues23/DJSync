@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:asp/asp.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:djsync/modules/products/viewmodel/product_viewmodel.dart';
 import 'package:djsync/modules/products/widgets/product_editor_modal.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:asp/asp.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
