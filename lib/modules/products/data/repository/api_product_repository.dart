@@ -8,20 +8,26 @@ class ApiProductRepository implements ProductRepositoryInterface {
 
   Future<String> _getBaseUrl() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('api_bae_url') ?? '';
+    final url = prefs.getString('api_base_url');
+    if (url == null || url.isEmpty) {
+      throw Exception('Servidor não configurado corretamente.');
+    }
+    return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
   }
 
   @override
   Future<List<Product>> importProducts() async {
     final baseUrl = await _getBaseUrl();
-    if (baseUrl.isEmpty) throw Exception('Configure o servidor primeiro');
 
     try {
       final response = await _dio.get('$baseUrl/products');
       final List<dynamic> data = response.data;
-      return data.map((item) => Product.fromJson(item)).toList();
+      return data.map((json) => Product.fromJson(json)).toList();
     } catch (e) {
-      throw Exception('Erro na API: $e');
+      if (e is DioException) {
+        throw Exception('Erro de conexão: ${e.message}');
+      }
+      throw Exception('Erro ao buscar produtos: $e');
     }
   }
 
@@ -34,7 +40,10 @@ class ApiProductRepository implements ProductRepositoryInterface {
 
       await _dio.put('$baseUrl/products', data: jsonList);
     } catch (e) {
-      throw Exception('Erro ao salvar: $e');
+      if (e is DioException) {
+        throw Exception('Erro ao enviar: ${e.message}');
+      }
+      throw Exception('Erro ao salvar produtos: $e');
     }
   }
 }

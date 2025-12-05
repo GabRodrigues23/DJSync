@@ -39,7 +39,7 @@ class Product {
       'DESCRICAO': description,
       'UN': unit,
       'PRECO_VENDA': price,
-      'ESTOQUE': stock,
+      'QTD_ESTOQUE': stock,
       'FLAG': flag,
     };
   }
