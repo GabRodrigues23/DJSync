@@ -23,10 +23,10 @@ dev_dependencies:
   cupertino_icons: ^1.0.8
   flutter_launcher_icons: ^0.14.4
 
-flutter_icons:
+flutter_launcher_icons:
     android: true
     ios: true
-    image_path: assets/images/icon/icon.ico
+    image_path: assets/icon/icon.png
 
 flutter:
   uses-material-design: true
